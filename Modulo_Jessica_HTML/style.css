@@ -69,6 +69,7 @@
 
 .field {
     position: relative;
+    margin: 0 auto;
     height: 30px;
     width: 80%;
     display: flex;
@@ -88,6 +89,18 @@
     border: none;
     outline: none;
     color: #222;
+    font-size: 16px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.field a {
+    height: 25px;
+    width: 80%;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #222;
+    text-decoration: none;
     font-size: 16px;
     font-family: 'Poppins', sans-serif;
 }
