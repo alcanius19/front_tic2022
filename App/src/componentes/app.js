@@ -6,6 +6,7 @@ import PaginaAdministracion from "./PaginaAdministracion";
 import PaginaAcercaDe from "./PaginaAcercaDe";
 import PaginaUsuarios from "./PaginaUsuarios";
 import PaginaVentas from "./PaginaVentas";
+import Productos from "./Productos";
 // Ccmún
 import Encabezado from "./comun/Encabezado";
 import Pie from "./comun/Pie";
@@ -28,6 +29,7 @@ function App() {
         <Route exact path="/usuarios" component={PaginaUsuarios} />
         <Route exact path="/ventas" component={PaginaVentas} />
         <Route path="/acercade" component={PaginaAcercaDe} />
+        <Route exact path="/productos" component={Productos} />
         <Route component={PaginaNoEncontrada} />
       </Switch>
       <Pie />

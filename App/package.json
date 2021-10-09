@@ -7,7 +7,7 @@
     "start": "run-p start:dev",
     "start:dev": "webpack serve --open --mode development --port 3000 --config webpack.config.dev.js",
     "build": "webpack --config webpack.config.dev.js",
-    "start:api": "@powershell -Command $env:DEBUG='servidor, servidor:*';nodemon ../Servidor/servidor.js"
+    "start:api": "nodemon /src/index.js"
   },
   "author": "Equipo 12",
   "license": "ISC",
