@@ -1,94 +1,96 @@
 import React from "react";
 
-const Productos = (props) => {
-  const [producto, setProducto] = React.useState(props.producto);
-  // const form = React.useRef(null);
-
-  console.log(producto);
-
-  const [estado, setEstado] = React.useState(false);
-  const enviar = (e) => {
-    e.preventDefault();
-    setProducto(producto);
-    console.log(producto)
-  };
-  const manipularEstado = () => {
-    setEstado(!estado);
-    console.log(estado);
-  };
-
+const Vendedores = () => {
   return (
     <>
       <div id="title-products" className={"container-fluid bg-ligth "}>
-        <h1>Modulo de productos</h1>
+        <h1>Modulo Vendedores</h1>
       </div>
-      <hr />
-      <form onSubmit={enviar}>
-        <div className="container">
+      <div className="container">
+        <form>
           <div className="form-group row p-2">
-            <label className="col-sm-2 col-form-label">Descripcion</label>
+            <label className="col-sm-2 col-form-label">Nombre</label>
             <div className="col-sm-4 pull-left">
-              <input type="text" name="producto" />
-            </div>
-            <div className="col">
               <input
                 type="text"
                 className="form-control"
-                placeholder="Valor Unitario"
+                placeholder="Nombre"
+              />
+            </div>
+            <div className="col-2">
+              <label>Fecha Ingreso</label>
+            </div>
+            <div className="col-4">
+              <input
+                type="date"
+                className="form-control"
+                placeholder="Fecha Ingreso"
               />
             </div>
           </div>
 
           <div className="form-group row p-2">
-            <label className="col-sm-2 col-form-label">Stock</label>
-            <div className="col-sm-4 pull-left">
+            <label className="col-sm-2 col-form-label">Cargo</label>
+            <div className="col-sm-4">
+              <input type="text" className="form-control" placeholder="Cargo" />
+            </div>
+            <label className="col-sm-2 col-form-label">Telefono</label>
+            <div className="col-sm-4">
               <input
-                type="number"
+                type="text"
                 className="form-control"
-                placeholder="Stock"
+                placeholder="Telefono"
               />
             </div>
-            <div className="col-sm-2">
+            <div className="col-sm-2 mt-2">
               <label>Estado</label>
             </div>
-            <div className="col-sm-1">
-              <input
-                type="checkbox"
-                value={estado}
-                onChange={manipularEstado}
-              />
+            <div className="col-sm-1 mt-2">
+              <input type="checkbox" checked data-toggle="toggle" />
             </div>
 
             <div className="form-group row p-2">
               <div className="col-sm-8 "></div>
               <div className="col-sm-4 ">
-                <button type="submit" className="btn btn-primary ">
-                  Add Producto
-                </button>
+                <button className="btn btn-primary">Add Vendedor</button>
               </div>
             </div>
+            <hr />
           </div>
-        </div>
-      </form>
-      <hr />
+        </form>
+      </div>
 
       <div className="row justify-content-center">
         <div className="col-lg-10">
           <table id="example" className="table table-responsive">
             <thead>
               <tr>
-                <th>Descripcion</th>
-                <th>Valor Unitario</th>
-                <th>Stock</th>
+                <th>Nombre</th>
+                <th>Cargo</th>
+                <th>Telefono</th>
+                <th>Fecha Ingreso</th>
                 <th>Estado</th>
                 <th>Acciones</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>Producto Prueba</td>
-                <td>1.2000</td>
-                <td>2</td>
+                <td>Felipe </td>
+                <td>Administrador</td>
+                <td>3223141038</td>
+                <td>22/12/2021</td>
+                <td>Activo</td>
+                <td>
+                  <button className="btn btn-danger">Eliminar</button>
+                  <button className="btn btn-warning">Editar</button>
+                </td>
+              </tr>
+
+              <tr>
+                <td>Jessica </td>
+                <td>Vendedor</td>
+                <td>3223141038</td>
+                <td>10/12/2021</td>
                 <td>Activo</td>
                 <td>
                   <button className="btn btn-danger">Eliminar</button>
@@ -96,22 +98,13 @@ const Productos = (props) => {
                 </td>
               </tr>
               <tr>
-                <td>Producto Prueba</td>
-                <td>1.2000</td>
-                <td>2</td>
+                <td>Diego </td>
+                <td>Vendedor</td>
+                <td>3223141038</td>
+                <td>02/09/2021</td>
                 <td>Activo</td>
                 <td>
-                  <button className="btn btn-danger">Eliminar</button>
-                  <button className="btn btn-warning">Editar</button>
-                </td>
-              </tr>
-              <tr>
-                <td>Producto Prueba</td>
-                <td>1.2000</td>
-                <td>2</td>
-                <td>Activo</td>
-                <td>
-                  <button className="btn btn-danger">Eliminar</button>
+                  <button className="btn btn-danger ">Eliminar</button>
                   <button className="btn btn-warning">Editar</button>
                 </td>
               </tr>
@@ -123,4 +116,5 @@ const Productos = (props) => {
     </>
   );
 };
-export default Productos;
+
+export default Vendedores;

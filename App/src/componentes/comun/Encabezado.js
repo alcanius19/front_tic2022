@@ -56,7 +56,6 @@ const Encabezado = () => {
                       <h5 className={"p-0 my-0"}>Contacto</h5>
                     </NavLink>
                   </li>
-                  
                 </ul>
               </div>
             </div>
@@ -170,6 +169,21 @@ const Encabezado = () => {
                       }}
                     >
                       <h6 className={"p-0 my-0"}>Productos</h6>
+                    </NavLink>
+                  </li>
+                  <li
+                    className="nav-item"
+                    data-bs-toggle="collapse"
+                    data-bs-target=".navbar-collapse.show"
+                  >
+                    <NavLink
+                      to="/vendedores"
+                      className={"nav-link"}
+                      onClick={() => {
+                        setNombreRuta("Vendedores");
+                      }}
+                    >
+                      <h6 className={"p-0 my-0"}>Vendedores</h6>
                     </NavLink>
                   </li>
                   <li
