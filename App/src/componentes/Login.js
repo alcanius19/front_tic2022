@@ -3,23 +3,23 @@ import "../css/login.css";
 import imagen from "../img/Digital_Tech.jpg";
 import useUsuarios from "../ganchos/Usuarios";
 function Login() {
-  const [usuario, setUsuario] = React.useState({ nombre: "", password: "" });
+  const [usuario, setUsuario] = React.useState({});
+  const [usuarioExiste, setUsuarioExiste] = React.useState(false);
   const [datos, setDatos] = useUsuarios();
 
   React.useEffect(() => {
-    if (usuario.nombre != "") {
-      const api = JSON.stringify(datos);
-      console.log(typeof datos);
-      const respuesta = datos;
-      if (respuesta.length > 0) {
-        console.log("usuario encontrado");
-      } else {
-        console.log("NO usuario encontrado");
-      }
+    if (usuario.nombre !== "") {
+      const respuesta = datos.filter((item) => item.nombre == usuario.nombre);
+      respuesta.length > 0 ? setUsuarioExiste(true) : setUsuarioExiste(false);
+      setUsuario({ ...usuario, ...respuesta[0] });
     }
   }, [usuario.nombre]);
 
-  const validarUsuario = () => {};
+  const validarUsuario = () => {
+    usuarioExiste
+      ? alert("Usuario: " + JSON.stringify(usuario))
+      : alert("Usuario no existe.");
+  };
   const recargar = (e) => {
     e.preventDefault();
   };
