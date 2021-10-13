@@ -216,6 +216,22 @@ const Encabezado = () => {
                       <h6 className={"p-0 my-0"}>Otra Ruta</h6>
                     </NavLink>
                   </li>
+
+                  <li
+                    className="nav-item"
+                    data-bs-toggle="collapse"
+                    data-bs-target=".navbar-collapse.show"
+                  >
+                    <NavLink
+                      to="/login"
+                      className={"nav-link"}
+                      onClick={() => {
+                        setNombreRuta("Login");
+                      }}
+                    >
+                      <h6 className={"p-0 my-0"}>Login</h6>
+                    </NavLink>
+                  </li>
                 </ul>
               </nav>
             </div>
