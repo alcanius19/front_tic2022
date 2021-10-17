@@ -4,7 +4,7 @@ import axios from "axios";
 function usuariosPrueba() {
   const [usuarios, setUsuarios] = React.useState([]);
   const obtenerUsuarios = async () => {
-    const res = await axios.get("http://localhost:4000/api/usuarios");
+    const res = await axios.get(" ");
     const users = res.data;
     setUsuarios(users);
   };
