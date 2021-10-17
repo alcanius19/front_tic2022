@@ -1,8 +1,10 @@
 //import React, { useEffect, useState } from "react";
 import React from "react";
 //import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import usuariosPrueba from "../ganchos/usuariosPrueba";
 
 const PaginaUsuarios = () => {
+
   return (
     <>
       <div id="title-products" className={"container-fluid bg-ligth "}>

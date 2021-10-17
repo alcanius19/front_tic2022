@@ -1,92 +1,19 @@
-import React, { Fragment } from "react";
-import "../css/login.css";
-import imagen from "../img/Digital_Tech.jpg";
-import useUsuarios from "../ganchos/Usuarios";
-function Login() {
-  const [usuario, setUsuario] = React.useState({ nombre: "", password: "" });
-  const [datos, setDatos] = useUsuarios();
-
-  React.useEffect(() => {
-    if (usuario.nombre != "") {
-      const api = JSON.stringify(datos);
-      console.log(typeof datos);
-      const respuesta = datos;
-      if (respuesta.length > 0) {
-        console.log("usuario encontrado");
-      } else {
-        console.log("NO usuario encontrado");
-      }
-    }
-  }, [usuario.nombre]);
-
-  const validarUsuario = () => {};
-  const recargar = (e) => {
-    e.preventDefault();
-  };
+import React from "react";
+import { useAuth0 } from "@auth0/auth0-react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+const Login = () => {
+  const { loginWithRedirect } = useAuth0();
   return (
-    <Fragment>
-      <div className="bg-img">
-        <div className="titulo">
-          <h1>InnovaTECH</h1>
-        </div>
-        <div className="lema">
-          <h2>Un vistazo al futuro</h2>
-        </div>
-
-        <div className="imgLogo">
-          <img
-            src={imagen}
-            className="d-flex rounded h-100"
-            alt="Responsive image"
-          />
-        </div>
-
-        <div className="content">
-          <header>Iniciar Sección</header>
-
-          <form onSubmit={recargar}>
-            <div className="field">
-              <span className="fa fa-user"></span>
-              <input
-                type="text"
-                placeholder=""
-                onChange={(e) => {
-                  setUsuario({ ...usuario, nombre: e.target.value });
-                }}
-                defaultValue={usuario.nombre}
-              />
-            </div>
-            <div className="field space">
-              <span className="fa fa-lock"></span>
-              <input type="password" placeholder="password" />
-            </div>
-            <div>{usuario.nombre}</div>
-
-            <div className="pass">
-              <a href="#">Olvidaste contraseña?</a>
-            </div>
-
-            <div className="field">
-              <span></span>
-              <button
-                className="btn btn-info"
-                onClick={() => {
-                  validarUsuario();
-                }}
-              >
-                Enviar
-              </button>
-            </div>
-
-            <div className="field space">
-              <span></span>
-              <a href="crear_usuario.html">Crear Usuario</a>
-            </div>
-          </form>
-        </div>
-      </div>
-    </Fragment>
+    <button
+      className="btn btn-light"
+      onClick={() => {
+        loginWithRedirect();
+      }}
+    >
+      <FontAwesomeIcon icon={["far", "user"]} />
+      Ingresar
+    </button>
   );
-}
+};
 
 export default Login;
