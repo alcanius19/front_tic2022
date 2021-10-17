@@ -1,21 +1,46 @@
 import React from "react";
-
-const Productos = (props) => {
-  const [producto, setProducto] = React.useState(props.producto);
-  // const form = React.useRef(null);
-
-  console.log(producto);
-
+import axios from "axios";
+const Productos = () => {
+  const [producto, setProductos] = React.useState([]);
   const [estado, setEstado] = React.useState(false);
-  const enviar = (e) => {
-    e.preventDefault();
-    setProducto(producto);
-    console.log(producto)
+  const [descripcion, setDescripcion] = React.useState("");
+  const [valor_unit, setValor_unit] = React.useState("");
+  const [stock, setStock] = React.useState("");
+
+  const url = "http://localhost:4000/api/productos";
+
+  const obtenerProductos = async () => {
+    const res = await axios.get(url);
+    const products = res.data;
+    setProductos(products);
   };
+
+  const crearProducto = (e) => {
+    e.preventDefault();
+    const postData = {
+      descripcion,
+      valor_unit,
+      estado,
+      stock,
+    };
+
+    axios
+      .post("http://localhost:4000/api/productos", postData)
+      .then((response) => {
+        console.log(response);
+      });
+  };
+
   const manipularEstado = () => {
     setEstado(!estado);
     console.log(estado);
   };
+
+  React.useEffect(() => {
+    setTimeout(() => {
+      obtenerProductos();
+    }, 2000);
+  });
 
   return (
     <>
@@ -23,18 +48,30 @@ const Productos = (props) => {
         <h1>Modulo de productos</h1>
       </div>
       <hr />
-      <form onSubmit={enviar}>
+      <form onSubmit={crearProducto}>
         <div className="container">
           <div className="form-group row p-2">
             <label className="col-sm-2 col-form-label">Descripcion</label>
             <div className="col-sm-4 pull-left">
-              <input type="text" name="producto" />
+              <input
+                className="form-control"
+                type="text"
+                name="producto"
+                value={descripcion}
+                onChange={(e) => {
+                  setDescripcion(e.target.value);
+                }}
+              />
             </div>
             <div className="col">
               <input
                 type="text"
                 className="form-control"
                 placeholder="Valor Unitario"
+                value={valor_unit}
+                onChange={(e) => {
+                  setValor_unit(e.target.value);
+                }}
               />
             </div>
           </div>
@@ -46,6 +83,10 @@ const Productos = (props) => {
                 type="number"
                 className="form-control"
                 placeholder="Stock"
+                value={stock}
+                onChange={(e) => {
+                  setStock(e.target.value);
+                }}
               />
             </div>
             <div className="col-sm-2">
@@ -77,6 +118,7 @@ const Productos = (props) => {
           <table id="example" className="table table-responsive">
             <thead>
               <tr>
+                <th>Id</th>
                 <th>Descripcion</th>
                 <th>Valor Unitario</th>
                 <th>Stock</th>
@@ -85,36 +127,19 @@ const Productos = (props) => {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>Producto Prueba</td>
-                <td>1.2000</td>
-                <td>2</td>
-                <td>Activo</td>
-                <td>
-                  <button className="btn btn-danger">Eliminar</button>
-                  <button className="btn btn-warning">Editar</button>
-                </td>
-              </tr>
-              <tr>
-                <td>Producto Prueba</td>
-                <td>1.2000</td>
-                <td>2</td>
-                <td>Activo</td>
-                <td>
-                  <button className="btn btn-danger">Eliminar</button>
-                  <button className="btn btn-warning">Editar</button>
-                </td>
-              </tr>
-              <tr>
-                <td>Producto Prueba</td>
-                <td>1.2000</td>
-                <td>2</td>
-                <td>Activo</td>
-                <td>
-                  <button className="btn btn-danger">Eliminar</button>
-                  <button className="btn btn-warning">Editar</button>
-                </td>
-              </tr>
+              {producto.map((item, key) => (
+                <tr key={key}>
+                  <td>{key + 1}</td>
+                  <td>{item.descripcion}</td>
+                  <td>{item.valor_unit}</td>
+                  <td>{item.stock}</td>
+                  <td>{String(item.estado)}</td>
+                  <td>
+                    <button className="btn btn-danger">Eliminar</button>{" "}
+                    <button className="btn btn-warning">Editar</button>
+                  </td>
+                </tr>
+              ))}
             </tbody>
             <tfoot></tfoot>
           </table>
