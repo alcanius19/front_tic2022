@@ -2,7 +2,7 @@ import React from "react";
 import { Route, Switch } from "react-router-dom";
 //Pagínas
 import PaginaInicio from "./PaginaInicio";
-import PaginaAdministracion from "./PaginaAdministracion";
+import PaginaAdministracion from "./administracion_ventas/PaginaAdministracion";
 import PaginaAcercaDe from "./PaginaAcercaDe";
 import PaginaUsuarios from "./PaginaUsuarios";
 import PaginaVentas from "./PaginaVentas";
