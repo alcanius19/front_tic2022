@@ -3,10 +3,15 @@ import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import "../../css/encabezado.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Button, Modal } from "react-bootstrap";
+import { Button, Modal,ModalBody, ModalFooter } from "react-bootstrap";
+import Dropdown from "react-bootstrap/Dropdown";
+import DropdownButton from "react-bootstrap/DropdownButton";
 import logo from "../../img/logo.png";
-
+import Login from "../Login";
+import { useAuth0 } from "@auth0/auth0-react";
+import Logout from "../Logout";
 const Encabezado = () => {
+  const { user, isAuthenticated, isLoading } = useAuth0();
   //const location = useLocation();
   const [mostrar, setMostrar] = useState(false);
   const [nombreRuta, setNombreRuta] = useState("Ir al módulo");
@@ -62,9 +67,25 @@ const Encabezado = () => {
           </nav>
         </div>
         <div className={"d-flex me-2"}>
-          <button className="btn btn-light" onClick={manejarMostrar}>
-            <FontAwesomeIcon icon={["far", "user"]} /> Ingresar
-          </button>
+          {isAuthenticated ? (
+            <>
+              <DropdownButton
+                id="dropdown-basic-button"
+                title={user.name}
+                variant="secondary"
+                menuVariant="dark"
+                height="40px"
+              >
+                <Dropdown.Item href="#/action-1">{user.name}</Dropdown.Item>
+                <Dropdown.Item href="#/action-3">
+                  {" "}
+                  <Logout />
+                </Dropdown.Item>
+              </DropdownButton>
+            </>
+          ) : (
+            <Login />
+          )}
         </div>
       </div>
       <div
@@ -214,6 +235,22 @@ const Encabezado = () => {
                       }}
                     >
                       <h6 className={"p-0 my-0"}>Otra Ruta</h6>
+                    </NavLink>
+                  </li>
+
+                  <li
+                    className="nav-item"
+                    data-bs-toggle="collapse"
+                    data-bs-target=".navbar-collapse.show"
+                  >
+                    <NavLink
+                      to="/login"
+                      className={"nav-link"}
+                      onClick={() => {
+                        setNombreRuta("Login");
+                      }}
+                    >
+                      <h6 className={"p-0 my-0"}>Login</h6>
                     </NavLink>
                   </li>
                 </ul>
