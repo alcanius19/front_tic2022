@@ -1,3 +1,0 @@
-# Documentación Proyecto XXXXXX
-
-## Contenido
