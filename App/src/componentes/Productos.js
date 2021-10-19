@@ -1,11 +1,59 @@
 import React from "react";
 import axios from "axios";
+import { Button, Modal, ModalBody, ModalFooter } from "react-bootstrap";
 const Productos = () => {
+  const [modalEditar, setModalEditar] = React.useState(false);
+
   const [producto, setProductos] = React.useState([]);
   const [estado, setEstado] = React.useState(false);
   const [descripcion, setDescripcion] = React.useState("");
   const [valor_unit, setValor_unit] = React.useState("");
   const [stock, setStock] = React.useState("");
+
+  // obtener los atributos del producto seleccionado
+  const [productoSelect, setProductoSelect] = React.useState([
+    {
+      _id: "",
+      estado: false,
+      descripcion: "",
+      valor_unit: "",
+      stock: "",
+    },
+  ]);
+
+  const manipularEstado = () => {
+    setEstado(!estado);
+    return estado;
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setProductoSelect((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+    console.log(productoSelect);
+  };
+
+  const editarProducto = () => {
+    let api = url.concat(`/${productoSelect._id}`);
+    axios.put(api, productoSelect).then((response) => {
+      console.log(response);
+    });
+    setModalEditar(false);
+  };
+
+  const eliminarProducto = (producto) => {
+    let api = url.concat(`/${producto}`);
+    axios.delete(api, productoSelect).then((response) => {
+      console.log(response);
+    });
+  };
+
+  const seleccionarProducto = (elemento, caso) => {
+    setProductoSelect(elemento);
+    caso === "Editar" && setModalEditar(true);
+  };
 
   const url = "http://localhost:4000/api/productos";
 
@@ -29,11 +77,6 @@ const Productos = () => {
       .then((response) => {
         console.log(response);
       });
-  };
-
-  const manipularEstado = () => {
-    setEstado(!estado);
-    console.log(estado);
   };
 
   React.useEffect(() => {
@@ -135,14 +178,99 @@ const Productos = () => {
                   <td>{item.stock}</td>
                   <td>{String(item.estado)}</td>
                   <td>
-                    <button className="btn btn-danger">Eliminar</button>{" "}
-                    <button className="btn btn-warning">Editar</button>
+                    <button
+                      className="btn btn-danger"
+                      onClick={() => {
+                        eliminarProducto(item._id);
+                      }}
+                    >
+                      Eliminar
+                    </button>{" "}
+                    <button
+                      className="btn btn-warning"
+                      onClick={() => {
+                        seleccionarProducto(item, "Editar");
+                      }}
+                    >
+                      Editar
+                    </button>
                   </td>
                 </tr>
               ))}
             </tbody>
             <tfoot></tfoot>
           </table>
+
+          <Modal show={modalEditar}>
+            <Modal.Header>
+              <Modal.Title>Editar Producto</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <div className="form-group">
+                <label>ID</label>
+                <input
+                  className="form-control"
+                  readOnly
+                  type="text"
+                  name="id"
+                  value={productoSelect && productoSelect._id}
+                  onChange={handleChange}
+                />
+                <br />
+                <label>Descripcion</label>
+                <input
+                  className="form-control"
+                  type="text"
+                  name="descripcion"
+                  value={productoSelect && productoSelect.descripcion}
+                  onChange={handleChange}
+                />
+                <br />
+                <label>Valor Unitario</label>
+                <input
+                  className="form-control"
+                  type="text"
+                  name="valor_unit"
+                  value={productoSelect && productoSelect.valor_unit}
+                  onChange={handleChange}
+                />
+                <br />
+                <label>Stock</label>
+                <input
+                  className="form-control"
+                  type="text"
+                  name="stock"
+                  value={productoSelect && productoSelect.stock}
+                  onChange={handleChange}
+                />
+                <br />
+                <label>Estado</label>
+                <select
+                  name="estado"
+                  value={productoSelect && productoSelect.estado}
+                  onChange={handleChange}
+                >
+                  <option value={true}>Activo</option>
+                  <option value={false}>Inactivo</option>
+                </select>
+                <br />
+              </div>
+            </Modal.Body>
+            <Modal.Footer>
+              <button
+                className="btn btn-danger"
+                onClick={() => setModalEditar(false)}
+              >
+                Cancelar
+              </button>
+              <button
+                className="btn btn-primary"
+                onClick={() => editarProducto()}
+              >
+                Editar
+              </button>
+            </Modal.Footer>
+          </Modal>
         </div>
       </div>
     </>
