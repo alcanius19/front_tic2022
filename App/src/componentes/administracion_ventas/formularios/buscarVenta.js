@@ -136,7 +136,11 @@ const FormularioBuscarVenta = ({ formulario }) => {
           {usuarios.length > 0
             ? // eslint-disable-next-line no-unused-vars
               usuarios
-                .filter((usuario) => usuario.rol == 2)
+                .filter(
+                  (usuario) =>
+                    usuario.rol === "administrador" ||
+                    usuario.rol === "vendedor"
+                )
                 .map((vendedor) => (
                   <option key={vendedor._id} value={vendedor._id}>
                     {vendedor.nombre}
