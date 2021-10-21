@@ -12,6 +12,7 @@
   "author": "Equipo 12",
   "license": "ISC",
   "dependencies": {
+    "@auth0/auth0-react": "^1.8.0",
     "@fortawesome/fontawesome-free": "^5.15.4",
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
     "@fortawesome/free-brands-svg-icons": "^5.15.4",
@@ -83,7 +84,7 @@
     "rules": {
       "no-debugger": "off",
       "no-console": "off",
-      "no-unused-vars": "warn",
+      "no-unused-vars": "off",
       "react/prop-types": "off"
     },
     "settings": {
