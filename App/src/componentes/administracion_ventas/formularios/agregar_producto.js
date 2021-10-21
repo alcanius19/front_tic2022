@@ -51,9 +51,13 @@ const FormularioAgregarProducto = ({ formulario }) => {
   }, [descripcion]);
 
   useEffect(() => {
-    if (datosProductoId?.items && datosProductoId.items.length >= 0) {
+    if (
+      datosProductoId?.items &&
+      datosProductoId.items.length >= 0 &&
+      datosProductoId.items[0]?.res
+    ) {
       console.log(datosProductoId);
-      setDatosProductos([...datosProductoId.items]);
+      setDatosProductos([datosProductoId.items[0].res]);
     }
   }, [datosProductoId.items.length]);
   useEffect(() => {
