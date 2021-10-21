@@ -10,8 +10,10 @@ import logo from "../../img/logo.png";
 import Login from "../Login";
 import { useAuth0 } from "@auth0/auth0-react";
 import Logout from "../Logout";
+import LoginAuth from "../LoginAuth";
 const Encabezado = () => {
   const { user, isAuthenticated, isLoading } = useAuth0();
+
   //const location = useLocation();
   const [mostrar, setMostrar] = useState(false);
   const [nombreRuta, setNombreRuta] = useState("Ir al módulo");
@@ -67,25 +69,7 @@ const Encabezado = () => {
           </nav>
         </div>
         <div className={"d-flex me-2"}>
-          {isAuthenticated ? (
-            <>
-              <DropdownButton
-                id="dropdown-basic-button"
-                title={user.name}
-                variant="secondary"
-                menuVariant="dark"
-                height="40px"
-              >
-                <Dropdown.Item href="#/action-1">{user.name}</Dropdown.Item>
-                <Dropdown.Item href="#/action-3">
-                  {" "}
-                  <Logout />
-                </Dropdown.Item>
-              </DropdownButton>
-            </>
-          ) : (
-            <Login />
-          )}
+         <LoginAuth/>
         </div>
       </div>
       <div
