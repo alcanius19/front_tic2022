@@ -22,7 +22,10 @@ const ModeloTabla = (datosTabla, setDatosTabla) => {
     <div>
       {
         usuarios.filter((usuario) => {
-          return usuario._id == cell && usuario.rol == 2;
+          return (
+            usuario._id == cell &&
+            (usuario.rol === "administrador" || usuario.rol === "vendedor")
+          );
         })[0].nombre
       }
     </div>
