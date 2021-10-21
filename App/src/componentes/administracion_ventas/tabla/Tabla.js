@@ -39,24 +39,20 @@ const Tabla = ({
     type,
     { data, cellEdit: { rowId, dataField, newValue } }
   ) => {
-    setTimeout(() => {
-      const resultado = data.map((row) => {
-        if (row[keyid] === rowId) {
-          const newRow = { ...row };
-          newRow[dataField] = newValue;
-          return newRow;
-        }
-        return row;
-      });
-      if (resultado.length > 0) {
-        const resultados = alGuardarFilas(resultado);
-        setDatos([...resultados]);
-        setFilasSeleccionadas([]);
-        setSeleccionar([]);
-      } else {
-        setDatos([...data]);
-      }
-    }, 1000);
+    setDatos((_datos) =>
+      alGuardarFilas(
+        _datos.map((fila) => {
+          if (fila[keyid] == rowId) {
+            fila[dataField] = newValue;
+          }
+          return fila;
+        })
+      )
+    );
+    setFilasSeleccionadas(
+      [...filasSeleccionadas].filter((fila) => fila[keyid] !== rowId)
+    );
+    setSeleccionar([...seleccionar].filter((id) => id != rowId));
   };
 
   // eslint-disable-next-line no-unused-vars

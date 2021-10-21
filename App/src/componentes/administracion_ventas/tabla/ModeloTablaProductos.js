@@ -6,9 +6,8 @@ const ModeloTabla = (datosTabla, setDatosTabla, alBorrarFilas) => {
 
   // eslint-disable-next-line no-unused-vars
   const handleOnEdit = (content, row, rowIndex, columnIndex) => {
-    return filaSeleccionadas.length > 0 && filaSeleccionadas.includes(row)
-      ? true
-      : false;
+    const filas = filaSeleccionadas.filter((item) => item[keyid] == row[keyid]);
+    return filas.length > 0 ? true : false;
   };
 
   const handleDelete = (row) => {
