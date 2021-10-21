@@ -33,6 +33,13 @@ const PaginaUsuarios = () => {
     setModalEditar(false);
   };
 
+  const eliminarUsuario = (usuario) => {
+    let api = url.concat(`/${usuario}`);
+    axios.delete(api, usuarioSelect).then((response) => {
+      console.log(response);
+    });
+  };
+
   const seleccionarUsuario = (elemento, caso) => {
     setUsuarioSelect(elemento);
     caso === "Editar" && setModalEditar(true);
@@ -83,7 +90,14 @@ const PaginaUsuarios = () => {
                   <td>{item.estado}</td>
                   <td>{item.fecha}</td>
                   <td>
-                    <button className="btn btn-danger">Eliminar</button>{" "}
+                    <button
+                      className="btn btn-danger"
+                      onClick={() => {
+                        eliminarUsuario(item._id);
+                      }}
+                    >
+                      Eliminar
+                    </button>{" "}
                     <button
                       className="btn btn-warning"
                       onClick={() => {
@@ -136,7 +150,6 @@ const PaginaUsuarios = () => {
                 >
                   <option value={"administrador"}>Admin</option>
                   <option value={"vendedor"}>Vendedor</option>
-                 
                 </select>
                 <br />
               </div>
