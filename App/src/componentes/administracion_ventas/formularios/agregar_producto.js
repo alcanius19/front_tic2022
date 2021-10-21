@@ -14,7 +14,7 @@ const FormularioAgregarProducto = ({ formulario }) => {
   const [datosProductos, setDatosProductos] = useState([]);
 
   const [datosProductoId, setDatosProductoId] = useExtraerDatos({
-    ruta: "/api/productos/",
+    ruta: "/api/productos",
     parametro: "",
     items: [],
   });
@@ -32,6 +32,8 @@ const FormularioAgregarProducto = ({ formulario }) => {
         parametro: productoId,
         items: [],
       }));
+    } else {
+      setDatosProductos(productos);
     }
   }, [productoId]);
 
@@ -43,6 +45,8 @@ const FormularioAgregarProducto = ({ formulario }) => {
         parametro: descripcion,
         items: [],
       }));
+    } else {
+      setDatosProductos(productos);
     }
   }, [descripcion]);
 
@@ -91,7 +95,7 @@ const FormularioAgregarProducto = ({ formulario }) => {
         <Form.Label>Ingrese la descripción del producto:</Form.Label>
         <Form.Control
           type="text"
-          placeholder={"Ingrese el id..."}
+          placeholder={"Ingrese la descripción..."}
           value={descripcion}
           onChange={(e) => setDescripcion(e.target.value)}
         />

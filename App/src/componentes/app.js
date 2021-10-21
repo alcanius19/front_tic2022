@@ -6,9 +6,7 @@ import PaginaAdministracion from "./administracion_ventas/PaginaAdministracion";
 import PaginaAcercaDe from "./PaginaAcercaDe";
 import PaginaUsuarios from "./PaginaUsuarios";
 import PaginaVentas from "./PaginaVentas";
-import Productos from "./Productos";
-import Vendedores from "./Vendedores";
-// Ccmún
+// Común
 import Encabezado from "./comun/Encabezado";
 import Pie from "./comun/Pie";
 import PaginaNoEncontrada from "./PaginaNoEncontrada";
@@ -30,8 +28,6 @@ function App() {
         <Route exact path="/usuarios" component={PaginaUsuarios} />
         <Route exact path="/ventas" component={PaginaVentas} />
         <Route path="/acercade" component={PaginaAcercaDe} />
-        <Route exact path="/productos" component={Productos} />
-        <Route exact path="/vendedores" component={Vendedores} />
         <Route component={PaginaNoEncontrada} />
       </Switch>
       <Pie />

@@ -30,6 +30,7 @@ const Tabla = ({
     [filasSeleccionadas, setFilasSeleccionadas]
   );
   useEffect(() => {
+    console.log(filasSeleccionadas);
     if (filasSeleccionadas?.length && filasSeleccionadas.length > 0) {
       metodoSeleccion(filasSeleccionadas);
     }
@@ -37,32 +38,37 @@ const Tabla = ({
 
   const onTableChange = (
     type,
+    // eslint-disable-next-line no-unused-vars
     { data, cellEdit: { rowId, dataField, newValue } }
   ) => {
-    setTimeout(() => {
-      const resultado = data.map((row) => {
-        if (row[keyid] === rowId) {
-          const newRow = { ...row };
-          newRow[dataField] = newValue;
-          return newRow;
-        }
-        return row;
-      });
-      if (resultado.length > 0) {
-        const resultados = alGuardarFilas(resultado);
-        setDatos([...resultados]);
-        setFilasSeleccionadas([]);
-        setSeleccionar([]);
-      } else {
-        setDatos([...data]);
-      }
-    }, 1000);
+    //setTimeout(() => {
+    // const resultado = data.map((row) => {
+    //   if (row[keyid] === rowId) {
+    //     const newRow = { ...row };
+    //     newRow[dataField] = newValue;
+    //     return newRow;
+    //   }
+    //   return row;
+    // });
+    setDatos((_datos) =>
+      alGuardarFilas(
+        _datos.map((fila) => {
+          if (fila[keyid] == rowId) {
+            fila[dataField] = newValue;
+          }
+          return fila;
+        })
+      )
+    );
+    setFilasSeleccionadas(
+      [...filasSeleccionadas].filter((fila) => fila[keyid] !== rowId)
+    );
+    setSeleccionar([...seleccionar].filter((id) => id != rowId));
+    // }, 1000);
   };
-
   // eslint-disable-next-line no-unused-vars
   const handleDataChange = ({ dataSize }) => {
     console.log("Hi");
-    setSeleccionar([0]);
   };
 
   return (

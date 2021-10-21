@@ -19,7 +19,6 @@ const useGuardar = (propiedades) => {
   };
 
   useEffect(() => {
-    console.log(datos.items);
     if (Object.values(datos.items).length > 0) {
       const timeoutId = setTimeout(() => {
         const guardar = async () => {

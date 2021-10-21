@@ -13,17 +13,7 @@ const FormularioBuscarVenta = ({ formulario }) => {
   // eslint-disable-next-line no-unused-vars
   const [ventas, setVentas] = useExtraer("/api/ventas");
   const [clientes, setClientes] = useState([]);
-  useEffect(() => {
-    if (ventas.length > 0) {
-      setClientes((_clientes) => [
-        ..._clientes,
-        ...ventas.map((venta) => ({
-          nombre: venta.cliente,
-          cedula: venta.cedula,
-        })),
-      ]);
-    }
-  }, [ventas.length]);
+
   const [datosId, setDatosId] = useExtraerDatos({
     ruta: "/api/ventas/codigo",
     parametro: "",
@@ -43,6 +33,19 @@ const FormularioBuscarVenta = ({ formulario }) => {
   const [id, setId] = useState("");
   const [cliente, setCliente] = useState("");
   const [vendedorId, setVendedorId] = useState("");
+
+  useEffect(() => {
+    if (ventas.length > 0) {
+      setClientes((_clientes) => [
+        ..._clientes,
+        ...ventas.map((venta) => ({
+          nombre: venta.cliente,
+          cedula: venta.cedula,
+        })),
+      ]);
+      setDatosVentas(ventas);
+    }
+  }, [ventas.length]);
 
   useEffect(() => {
     if (id !== "") {
@@ -99,7 +102,9 @@ const FormularioBuscarVenta = ({ formulario }) => {
     }
   }, [datosCliente.items.length]);
   useEffect(() => {
-    console.log(JSON.stringify(datosVentas));
+    if (datosVentas.length > 0) {
+      console.log(JSON.stringify(datosVentas));
+    }
   }, [datosVentas]);
 
   const onSeleccion = (filasSeleccionadas) => {
