@@ -19,12 +19,25 @@ const ModeloSeleccion = (modo, keyid, ganchoFilaSeleccionada) => {
     }
   };
 
+  // eslint-disable-next-line no-unused-vars
+  const handleOnSelectAll = (isSelect, rows, e) => {
+    const ids = rows.map((r) => r[keyid]);
+    if (isSelect) {
+      setSeleccionarFila(ids);
+      setFilaSeleccionada(rows);
+    } else {
+      setSeleccionarFila([]);
+      setFilaSeleccionada([]);
+    }
+  };
+
   const seleccionar = {
     mode: modo,
     clickToSelect: false,
     clickToEdit: false,
     selected: seleccionarFila,
     onSelect: handleOnSelect,
+    onSelectAll: handleOnSelectAll,
   };
 
   return [seleccionar, seleccionarFila, setSeleccionarFila];

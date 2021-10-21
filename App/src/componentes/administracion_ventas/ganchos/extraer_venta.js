@@ -23,6 +23,7 @@ const useExtraer = (propiedades) => {
       const timeoutId = setTimeout(() => {
         const extraer = async () => {
           try {
+            console.log(`${datos.ruta}/${datos.parametro}`);
             const res = await api.get(`${datos.ruta}/${datos.parametro}`);
             let respuesta = res.data;
             if (respuesta) {

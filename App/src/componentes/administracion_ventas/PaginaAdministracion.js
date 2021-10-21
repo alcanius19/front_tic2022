@@ -200,11 +200,11 @@ const PaginaAdministracionVentas = () => {
       error("cliente", "Debe ingresar un cliente.");
       return;
     }
-    if (cedulaCliente === 0) {
+    if (cedulaCliente == 0) {
       error("cedula", "Debe ingresar la cedula.");
       return;
     }
-    if (vendedor === -1) {
+    if (vendedor == -1) {
       error("vendedor", "Debe elegir un vendedor.");
       return;
     }
@@ -337,7 +337,6 @@ const PaginaAdministracionVentas = () => {
     }
   }, [ventaActiva]);
   useEffect(() => {
-    console.log(productosActivos);
     if (productosActivos.length > 0) {
       setTotal(
         productosActivos.map((item) => item.total).reduce((pV, cV) => cV + pV)
@@ -383,7 +382,6 @@ const PaginaAdministracionVentas = () => {
     }
   }, [actualizarVenta.respuesta]);
   useEffect(() => {
-    console.log(eliminarVenta.respuesta);
     if (Object.keys(eliminarVenta.respuesta).length > 0) {
       if (eliminarVenta.respuesta[0].status == "eliminado") {
         alerta({
