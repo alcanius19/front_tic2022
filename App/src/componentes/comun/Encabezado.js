@@ -7,9 +7,9 @@ import { Button, Modal,ModalBody, ModalFooter } from "react-bootstrap";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import logo from "../../img/logo.png";
-import Login from "../Login";
+
 import { useAuth0 } from "@auth0/auth0-react";
-import Logout from "../Logout";
+
 import LoginAuth from "../LoginAuth";
 
 const Encabezado = () => {
