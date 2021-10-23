@@ -28,11 +28,8 @@ app.use("/api/productos", productos);
 app.use("/api/ventas", ventas);
 app.use("/api/usuarios", usuarios);
 
-
 // Static Files
-app.use(express.static(path.join(__dirname, "public/login")));
-
-app.use(express.static(path.join(__dirname,'public/build')))
+app.use(express.static(path.join(__dirname, "public/build")));
 
 // Starting the server
 app.listen(app.get("port"), () => {
