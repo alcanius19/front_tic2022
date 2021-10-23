@@ -20,11 +20,9 @@ const ModeloTabla = (datosTabla, setDatosTabla) => {
   // eslint-disable-next-line no-unused-vars
   const onFormatoVendedor = (cell, row, rowIndex, extraData) => (
     <div>
-      {
-        usuarios.filter((usuario) => {
-          return usuario._id == cell && usuario.rol == 2;
-        })[0].nombre
-      }
+      {usuarios.length > 0
+        ? usuarios.filter((usuario) => usuario._id == cell)[0].nombre
+        : null}
     </div>
   );
 
