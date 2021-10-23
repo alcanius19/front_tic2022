@@ -7,11 +7,7 @@
     "start": "run-p start:dev",
     "start:dev": "webpack serve --open --mode development --port 3000 --config webpack.config.dev.js",
     "build": "webpack --config webpack.config.dev.js",
-<<<<<<< HEAD
     "start:api": "nodemon ./back_tic2022/src/index.js"
-=======
-    "start:api": "nodemon ../back_tic2022/src/index.js"
->>>>>>> main
   },
   "author": "Equipo 12",
   "license": "ISC",
@@ -28,11 +24,7 @@
     "auth0-react": "^3.1.0",
     "axios": "^0.21.4",
     "bootstrap": "^5.1.1",
-<<<<<<< HEAD
     "build": "^0.1.4",
-=======
-    "cjs-loader": "^0.1.0",
->>>>>>> felipe
     "cors": "^2.8.5",
     "eslint-module-utils": "^2.7.1",
     "jquery": "^3.6.0",
