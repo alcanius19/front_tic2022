@@ -11,6 +11,7 @@ import Login from "../Login";
 import { useAuth0 } from "@auth0/auth0-react";
 import Logout from "../Logout";
 import LoginAuth from "../LoginAuth";
+
 const Encabezado = () => {
   const { user, isAuthenticated, isLoading } = useAuth0();
 
@@ -20,13 +21,18 @@ const Encabezado = () => {
 
   const manejarCierre = () => setMostrar(false);
   const manejarMostrar = () => setMostrar(true);
+  
+ 
   return (
+    
     <header className={"encabezado container-fluid px-0"}>
+
       <div
         className={
           "menuEncabezado d-flex justify-content-center align-items-center"
         }
       >
+        
         <div className={"d-flex flex-fill mx-auto"}>
           <nav
             className={"navbar navbar-expand-sm navbar-dark bg-dark flex-fill"}
@@ -43,16 +49,21 @@ const Encabezado = () => {
               >
                 <span className={"navbar-toggler-icon"}></span>
               </button>
+             
               <div
                 className={"collapse navbar-collapse justify-content-center"}
                 id={"navbarNav"}
               >
+               
+                
                 <ul className="navbar-nav d-flex">
                   <li className="nav-item">
                     <NavLink to="/" className={"nav-link active"} exact>
                       <h5 className={"p-0 my-0"}>Inicio</h5>
                     </NavLink>
                   </li>
+               
+                  
                   <li className="nav-item">
                     <NavLink to="/acercade" className={"nav-link"}>
                       <h5 className={"p-0 my-0"}>Acerca de</h5>
@@ -65,6 +76,7 @@ const Encabezado = () => {
                   </li>
                 </ul>
               </div>
+              
             </div>
           </nav>
         </div>
@@ -300,6 +312,7 @@ const Encabezado = () => {
         </Modal.Footer>
       </Modal>
     </header>
+   
   );
 };
 
