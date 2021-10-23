@@ -4,7 +4,7 @@ import axios from "axios";
 const useExtraer = (ruta) => {
   const [datos, setDatos] = useState([]);
   const api = axios.create({
-    baseURL: "http://localhost:4000/",
+    baseURL: "https://innovatech2021.herokuapp.com/",
   });
 
   useEffect(() => {

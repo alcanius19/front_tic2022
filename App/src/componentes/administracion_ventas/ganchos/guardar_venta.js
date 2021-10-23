@@ -9,7 +9,7 @@ const useGuardar = (propiedades) => {
     respuesta: propiedades.respuesta,
   });
   const api = axios.create({
-    baseURL: "http://localhost:4000/",
+    baseURL: "https://innovatech2021.herokuapp.com/",
   });
   const devolverItems = (datos) => {
     console.log(Array.isArray(datos) + " " + JSON.stringify(datos));

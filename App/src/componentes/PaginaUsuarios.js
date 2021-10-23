@@ -45,7 +45,7 @@ const PaginaUsuarios = () => {
     caso === "Editar" && setModalEditar(true);
   };
 
-  const url = "http://localhost:4000/api/usuarios";
+  const url = "https://innovatech2021.herokuapp.com/api/usuarios";
 
   const obtenerUsuarios = async (url) => {
     const res = await axios.get(url);

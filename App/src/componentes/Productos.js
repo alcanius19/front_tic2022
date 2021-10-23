@@ -55,7 +55,7 @@ const Productos = () => {
     caso === "Editar" && setModalEditar(true);
   };
 
-  const url = "http://localhost:4000/api/productos";
+  const url = "https://innovatech2021.herokuapp.com/api/productos";
 
   const obtenerProductos = async () => {
     const res = await axios.get(url);
@@ -73,7 +73,7 @@ const Productos = () => {
     };
 
     axios
-      .post("http://localhost:4000/api/productos", postData)
+      .post("https://innovatech2021.herokuapp.com/api/productos", postData)
       .then((response) => {
         console.log(response);
       });

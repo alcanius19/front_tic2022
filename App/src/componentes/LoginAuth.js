@@ -13,11 +13,13 @@ function LoginAuth() {
 
   const [usuarios, setUsuarios] = React.useState([]);
 
-   const url = "http://localhost:4000/api/usuarios/email";
+   const url = "https://innovatech2021.herokuapp.com/api/usuarios/email";
 
   const responseSuccessGoogle = (response) => {
     axios
-      .post("http://localhost:4000/api/usuarios", { tokenId: response.tokenId })
+      .post("https://innovatech2021.herokuapp.com/api/usuarios", {
+        tokenId: response.tokenId,
+      })
       .then((res) => {
         console.log(res);
       })
