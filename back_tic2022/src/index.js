@@ -17,7 +17,7 @@ app.set("port", process.env.PORT || 8080);
 app.use(morgan("dev"));
 // PERMITE ENVIAR DATOS EN FORMATO JSON
 app.use(express.json());
-app.use(cors());
+app.use(cors({ origin: "*" }));
 
 const productos = require(path.join(__dirname, "/routes/productos.routes.js"));
 const ventas = require(path.join(__dirname, "/routes/ventas.routes.js"));
