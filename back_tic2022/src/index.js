@@ -11,7 +11,7 @@ const app = express();
 // Db connection
 
 // Settings
-app.set("port", process.env.PORT || 4000);
+app.set("port", process.env.PORT || 8080);
 
 // Middlewares
 app.use(morgan("dev"));
@@ -31,6 +31,8 @@ app.use("/api/usuarios", usuarios);
 
 // Static Files
 app.use(express.static(path.join(__dirname, "public/login")));
+
+app.use(express.static(path.join(__dirname,'public/build')))
 
 // Starting the server
 app.listen(app.get("port"), () => {
