@@ -85,79 +85,86 @@ const Productos = () => {
     }, 2000);
   });
 
+  let status = localStorage.getItem("state");
+  let rolUser = localStorage.getItem("rol");
   return (
     <>
       <div id="title-products" className={"container-fluid bg-ligth "}>
         <h1>Modulo de productos</h1>
       </div>
       <hr />
-      <form onSubmit={crearProducto}>
-        <div className="container">
-          <div className="form-group row p-2">
-            <label className="col-sm-2 col-form-label">Descripcion</label>
-            <div className="col-sm-4 pull-left">
-              <input
-                className="form-control"
-                type="text"
-                name="producto"
-                value={descripcion}
-                onChange={(e) => {
-                  setDescripcion(e.target.value);
-                }}
-              />
-            </div>
-            <div className="col">
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Valor Unitario"
-                value={valor_unit}
-                onChange={(e) => {
-                  setValor_unit(e.target.value);
-                }}
-              />
-            </div>
-          </div>
-
-          <div className="form-group row p-2">
-            <label className="col-sm-2 col-form-label">Stock</label>
-            <div className="col-sm-4 pull-left">
-              <input
-                type="number"
-                className="form-control"
-                placeholder="Stock"
-                value={stock}
-                onChange={(e) => {
-                  setStock(e.target.value);
-                }}
-              />
-            </div>
-            <div className="col-sm-2">
-              <label>Estado</label>
-            </div>
-            <div className="col-sm-1">
-              <input
-                type="checkbox"
-                value={estado}
-                onChange={manipularEstado}
-              />
+      {status == "autorizado" && rolUser == "administrador" ? (
+        <form onSubmit={crearProducto}>
+          <div className="container">
+            <div className="form-group row p-2">
+              <label className="col-sm-2 col-form-label">Descripcion</label>
+              <div className="col-sm-4 pull-left">
+                <input
+                  className="form-control"
+                  type="text"
+                  name="producto"
+                  value={descripcion}
+                  onChange={(e) => {
+                    setDescripcion(e.target.value);
+                  }}
+                />
+              </div>
+              <div className="col">
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Valor Unitario"
+                  value={valor_unit}
+                  onChange={(e) => {
+                    setValor_unit(e.target.value);
+                  }}
+                />
+              </div>
             </div>
 
             <div className="form-group row p-2">
-              <div className="col-sm-8 "></div>
-              <div className="col-sm-4 ">
-                <button type="submit" className="btn btn-primary ">
-                  Add Producto
-                </button>
+              <label className="col-sm-2 col-form-label">Stock</label>
+              <div className="col-sm-4 pull-left">
+                <input
+                  type="number"
+                  className="form-control"
+                  placeholder="Stock"
+                  value={stock}
+                  onChange={(e) => {
+                    setStock(e.target.value);
+                  }}
+                />
+              </div>
+              <div className="col-sm-2">
+                <label>Estado</label>
+              </div>
+              <div className="col-sm-1">
+                <input
+                  type="checkbox"
+                  value={estado}
+                  onChange={manipularEstado}
+                />
+              </div>
+
+              <div className="form-group row p-2">
+                <div className="col-sm-8 "></div>
+                <div className="col-sm-4 ">
+                  <button type="submit" className="btn btn-primary ">
+                    Add Producto
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </form>
+        </form>
+      ) : (
+        <h1>Modulo Solo Administrativo</h1>
+      )}
       <hr />
 
       <div className="row justify-content-center">
         <div className="col-lg-10">
+           {status == "autorizado" && rolUser == "administrador" ? (
           <table id="example" className="table table-responsive">
             <thead>
               <tr>
@@ -200,6 +207,9 @@ const Productos = () => {
             </tbody>
             <tfoot></tfoot>
           </table>
+           ):(
+             ''
+           )}
 
           <Modal show={modalEditar}>
             <Modal.Header>

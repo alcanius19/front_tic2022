@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { GoogleLogin, GoogleLogout } from "react-google-login";
 import axios from "axios";
 
@@ -48,12 +48,15 @@ function LoginAuth() {
     setTimeout(() => {
       if (state.isLoggedIn) {
          obtenerUsuarios();
-         localStorage.setItem("state", JSON.stringify(usuarios));
+         localStorage.setItem('state',usuarios[0].estado)
+         localStorage.setItem('rol',usuarios[0].rol);
+       
       }else{
          localStorage.removeItem("state");
+          localStorage.removeItem("rol");
       }
      
-    },1000)
+    })
   })
 
 
@@ -74,7 +77,6 @@ function LoginAuth() {
     <div>
       {state.isLoggedIn ? (
         <div>
-          
           <GoogleLogout
             clientId="633086225553-495c1chi0spf75vvs1h3j3n3hnfgkufa.apps.googleusercontent.com"
             buttonText="Logout"
