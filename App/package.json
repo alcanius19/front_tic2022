@@ -4,7 +4,7 @@
   "description": "App Proyecto",
   "main": "index.js",
   "scripts": {
-    "start": "run-p start:dev",
+    "start": "run-p start:dev start:api",
     "start:dev": "webpack serve --open --mode development --port 3000 --config webpack.config.dev.js",
     "build": "webpack --config webpack.config.dev.js",
     "start:api": "nodemon ./back_tic2022/src/index.js"
