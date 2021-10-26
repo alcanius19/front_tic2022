@@ -8,20 +8,22 @@ const api = axios.create({
 const useUsuarios = () => {
   const [datos, setDatos] = useState([]);
 
-  const extraer = async () => {
-    
-    try {
-      setTimeout(() => {});
-      const res = await api.get(`/usuarios`);
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      const extraer = async () => {
+        try {
+          const res = await api.get(`/usuarios`);
+          setDatos((datos) => [...datos, ...res.data.map((item) => item)]);
+        } catch (error) {
+          console.error(error);
+        }
+      };
+      extraer();
+    }, 1000);
+    return () => clearTimeout(timeoutId);
+  }, []);
 
-      await setDatos((datos) => [...datos, ...res.data]);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-  extraer();
-
-  return { datos, setDatos };
+  return [datos, setDatos];
 };
 
 export default useUsuarios;

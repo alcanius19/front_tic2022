@@ -92,7 +92,7 @@
     "rules": {
       "no-debugger": "off",
       "no-console": "off",
-      "no-unused-vars": "warn",
+      "no-unused-vars": "off",
       "react/prop-types": "warn"
     },
     "settings": {
