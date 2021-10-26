@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import "../../css/encabezado.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Button, Modal,ModalBody, ModalFooter } from "react-bootstrap";
+import { Button, Modal, ModalBody, ModalFooter } from "react-bootstrap";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import logo from "../../img/logo.png";
@@ -21,18 +21,14 @@ const Encabezado = () => {
 
   const manejarCierre = () => setMostrar(false);
   const manejarMostrar = () => setMostrar(true);
-  
- 
-  return (
-    
-    <header className={"encabezado container-fluid px-0"}>
 
+  return (
+    <header className={"encabezado container-fluid px-0"}>
       <div
         className={
           "menuEncabezado d-flex justify-content-center align-items-center"
         }
       >
-        
         <div className={"d-flex flex-fill mx-auto"}>
           <nav
             className={"navbar navbar-expand-sm navbar-dark bg-dark flex-fill"}
@@ -49,21 +45,18 @@ const Encabezado = () => {
               >
                 <span className={"navbar-toggler-icon"}></span>
               </button>
-             
+
               <div
                 className={"collapse navbar-collapse justify-content-center"}
                 id={"navbarNav"}
               >
-               
-                
                 <ul className="navbar-nav d-flex">
                   <li className="nav-item">
                     <NavLink to="/" className={"nav-link active"} exact>
                       <h5 className={"p-0 my-0"}>Inicio</h5>
                     </NavLink>
                   </li>
-               
-                  
+
                   <li className="nav-item">
                     <NavLink to="/acercade" className={"nav-link"}>
                       <h5 className={"p-0 my-0"}>Acerca de</h5>
@@ -76,12 +69,11 @@ const Encabezado = () => {
                   </li>
                 </ul>
               </div>
-              
             </div>
           </nav>
         </div>
         <div className={"d-flex me-2"}>
-         <LoginAuth/>
+          <LoginAuth />
         </div>
       </div>
       <div
@@ -90,7 +82,7 @@ const Encabezado = () => {
         }
       >
         <div className={"d-flex flex-shrink-0"}>
-          <a className="navbar-brand" href="index.html">
+          <a className="navbar-brand" href="/">
             <img
               src={logo}
               className="d-flex img-fluid rounded"
@@ -151,11 +143,11 @@ const Encabezado = () => {
                       to="/administracion"
                       className={"nav-link active"}
                       onClick={() => {
-                        setNombreRuta("Administración");
+                        setNombreRuta("Ventas");
                       }}
                       exact
                     >
-                      <h6 className={"p-0 my-0"}>Administración</h6>
+                      <h6 className={"p-0 my-0"}>ventas</h6>
                     </NavLink>
                   </li>
                   <li
@@ -186,67 +178,6 @@ const Encabezado = () => {
                       }}
                     >
                       <h6 className={"p-0 my-0"}>Productos</h6>
-                    </NavLink>
-                  </li>
-                  <li
-                    className="nav-item"
-                    data-bs-toggle="collapse"
-                    data-bs-target=".navbar-collapse.show"
-                  >
-                    <NavLink
-                      to="/vendedores"
-                      className={"nav-link"}
-                      onClick={() => {
-                        setNombreRuta("Vendedores");
-                      }}
-                    >
-                      <h6 className={"p-0 my-0"}>Vendedores</h6>
-                    </NavLink>
-                  </li>
-                  <li
-                    className="nav-item"
-                    data-bs-toggle="collapse"
-                    data-bs-target=".navbar-collapse.show"
-                  >
-                    <NavLink
-                      to="/ventas"
-                      className={"nav-link"}
-                      onClick={() => {
-                        setNombreRuta("Ventas");
-                      }}
-                    >
-                      <h6 className={"p-0 my-0"}>ventas</h6>
-                    </NavLink>
-                  </li>
-                  <li
-                    className="nav-item"
-                    data-bs-toggle="collapse"
-                    data-bs-target=".navbar-collapse.show"
-                  >
-                    <NavLink
-                      to="/otraruta"
-                      className={"nav-link"}
-                      onClick={() => {
-                        setNombreRuta("Otra Ruta");
-                      }}
-                    >
-                      <h6 className={"p-0 my-0"}>Otra Ruta</h6>
-                    </NavLink>
-                  </li>
-
-                  <li
-                    className="nav-item"
-                    data-bs-toggle="collapse"
-                    data-bs-target=".navbar-collapse.show"
-                  >
-                    <NavLink
-                      to="/login"
-                      className={"nav-link"}
-                      onClick={() => {
-                        setNombreRuta("Login");
-                      }}
-                    >
-                      <h6 className={"p-0 my-0"}>Login</h6>
                     </NavLink>
                   </li>
                 </ul>
@@ -312,7 +243,6 @@ const Encabezado = () => {
         </Modal.Footer>
       </Modal>
     </header>
-   
   );
 };
 

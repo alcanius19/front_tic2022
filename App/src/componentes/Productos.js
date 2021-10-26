@@ -1,9 +1,10 @@
 import React from "react";
 import axios from "axios";
+import Swal from 'sweetalert2'
 import { Button, Modal, ModalBody, ModalFooter } from "react-bootstrap";
 const Productos = () => {
+  const Swal = require('sweetalert2')
   const [modalEditar, setModalEditar] = React.useState(false);
-
   const [producto, setProductos] = React.useState([]);
   const [estado, setEstado] = React.useState(false);
   const [descripcion, setDescripcion] = React.useState("");
@@ -38,7 +39,14 @@ const Productos = () => {
   const editarProducto = () => {
     let api = url.concat(`/${productoSelect._id}`);
     axios.put(api, productoSelect).then((response) => {
-      console.log(response);
+      let res = response.data.status
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Editado Correctamente",
+        showConfirmButton: false,
+        timer: 1500,
+      });
     });
     setModalEditar(false);
   };
@@ -75,7 +83,12 @@ const Productos = () => {
     axios
       .post("https://innovatech2021.herokuapp.com/api/productos", postData)
       .then((response) => {
-        console.log(response);
+      let  res = response.data.status;
+        Swal.fire({
+          title: res,
+          icon: "success",
+          
+        });
       });
   };
 

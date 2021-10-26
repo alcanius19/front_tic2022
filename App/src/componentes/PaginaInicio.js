@@ -4,12 +4,12 @@ import React from "react";
 
 import LoginAuth from "./LoginAuth";
 
-
 const PaginaInicio = () => {
   return (
     <div>
-     
-     
+      <div className="container mt-6">
+       <h1>BIENVENIDO A INNOVATECH </h1>
+    </div>
     </div>
   );
 };
