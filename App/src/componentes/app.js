@@ -37,7 +37,7 @@ function App() {
 
         <Route component={PaginaNoEncontrada} />
       </Switch>
-      <Pie />
+      {/* <Pie /> */}
     </div>
   );
 }

@@ -143,11 +143,11 @@ const Encabezado = () => {
                       to="/administracion"
                       className={"nav-link active"}
                       onClick={() => {
-                        setNombreRuta("Administración");
+                        setNombreRuta("Ventas");
                       }}
                       exact
                     >
-                      <h6 className={"p-0 my-0"}>Administración</h6>
+                      <h6 className={"p-0 my-0"}>ventas</h6>
                     </NavLink>
                   </li>
                   <li
