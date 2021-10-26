@@ -8,7 +8,7 @@ const useExtraer = (propiedades) => {
     items: propiedades.items,
   });
   const api = axios.create({
-    baseURL: "https://innovatech2021.herokuapp.com/",
+    baseURL: "http://localhost:4000/",
   });
 
   const devolverItems = (datos) => {
@@ -33,6 +33,7 @@ const useExtraer = (propiedades) => {
             }
             setDatos((datos) => ({
               ...datos,
+              parametro: "",
               items: respuesta,
             }));
           } catch (error) {

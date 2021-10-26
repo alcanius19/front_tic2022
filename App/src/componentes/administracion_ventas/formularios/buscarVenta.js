@@ -31,8 +31,8 @@ const FormularioBuscarVenta = ({ formulario }) => {
   });
   const [datosVentas, setDatosVentas] = useState([]);
   const [id, setId] = useState("");
-  const [cliente, setCliente] = useState("");
-  const [vendedorId, setVendedorId] = useState("");
+  const [cliente, setCliente] = useState("-1");
+  const [vendedorId, setVendedorId] = useState("-1");
 
   useEffect(() => {
     if (ventas.length > 0) {
@@ -49,37 +49,43 @@ const FormularioBuscarVenta = ({ formulario }) => {
 
   useEffect(() => {
     if (id !== "") {
-      setCliente(0);
-      setVendedorId("0");
+      setCliente("-1");
+      setVendedorId("-1");
       setDatosId((datosId) => ({
         ...datosId,
         parametro: id,
         items: [],
       }));
+    } else {
+      setDatosVentas(ventas);
     }
   }, [id]);
 
   useEffect(() => {
-    if (cliente != 0) {
+    if (cliente !== "" && cliente !== "-1") {
       setId("");
-      setVendedorId("0");
+      setVendedorId("-1");
       setDatosCliente((datosCliente) => ({
         ...datosCliente,
         parametro: cliente,
         items: [],
       }));
+    } else {
+      setDatosVentas(ventas);
     }
   }, [cliente]);
 
   useEffect(() => {
-    if (vendedorId !== "0") {
+    if (vendedorId !== "" && vendedorId !== "-1") {
       setId("");
-      setCliente(0);
+      setCliente("-1");
       setDatosVendedor((datosVendedor) => ({
         ...datosVendedor,
         parametro: vendedorId,
         items: [],
       }));
+    } else {
+      setDatosVentas(ventas);
     }
   }, [vendedorId]);
 
@@ -130,7 +136,7 @@ const FormularioBuscarVenta = ({ formulario }) => {
           aria-label="cmbVendedor"
           onChange={(e) => setVendedorId(e.target.value)}
         >
-          <option value={"0"} defaultValue>
+          <option value={"-1"} defaultValue>
             Selecciona
           </option>
           {usuarios.length > 0
@@ -156,7 +162,7 @@ const FormularioBuscarVenta = ({ formulario }) => {
           aria-label="cmbCliente"
           onChange={(e) => setCliente(e.target.value)}
         >
-          <option value={0} defaultValue>
+          <option value={"-1"} defaultValue>
             Selecciona
           </option>
           {clientes.length > 0

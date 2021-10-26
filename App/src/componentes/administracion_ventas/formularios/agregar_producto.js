@@ -114,7 +114,7 @@ const FormularioAgregarProducto = ({ formulario }) => {
           aria-label="cmbProducto"
           onChange={(e) => setProductoId(e.target.value)}
         >
-          <option value={"0"} defaultValue>
+          <option value={""} defaultValue>
             Selecciona
           </option>
           {productos.length > 0
