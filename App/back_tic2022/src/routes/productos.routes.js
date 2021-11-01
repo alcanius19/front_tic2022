@@ -23,6 +23,9 @@ router.get("/:id", async (req, res) => {
     //res.status(201).json(productos);
   } catch (err) {
     console.log(err);
+    res.status(201).json({
+      status: "No encontrado.",
+    });
   }
 });
 
