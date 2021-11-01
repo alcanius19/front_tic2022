@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 process.env.NODE_ENV = "development";
+process.env.API_URL = "https://innovatech2021.herokuapp.com/";
 
 module.exports = {
   mode: "development",
@@ -31,7 +32,7 @@ module.exports = {
   },
   plugins: [
     new webpack.DefinePlugin({
-      "process.env.API_URL": JSON.stringify("http://localhost:3001"),
+      "process.env.API_URL": JSON.stringify(process.env.API_URL),
     }),
     new HtmlWebpackPlugin({
       template: "./src/index.html",
@@ -73,7 +74,7 @@ module.exports = {
         use: [MiniCssExtractPlugin.loader, "css-loader"],
       },
       {
-        test: /\.(jpe?g|png|gif|svg|jpg)$/i,
+        test: /\.(jpe?g|png|gif|svg)$/i,
         use: [
           {
             loader: "file-loader",
