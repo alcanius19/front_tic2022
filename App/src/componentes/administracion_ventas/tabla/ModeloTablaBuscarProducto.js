@@ -7,10 +7,12 @@ const ModeloTabla = (datosTabla, setDatosTabla) => {
   // eslint-disable-next-line no-unused-vars
   const onFormatoEstado = (cell, row, rowIndex, extraData) => (
     <div
-      className="m-0 fw-bold badge bg-dark text-wrap"
+      className={`m-0 fw-bold badge ${
+        cell == true ? "bg-success" : "bg-danger"
+      } text-wrap`}
       style={{ width: "6rem" }}
     >
-      {cell == 1 ? "En proceso" : cell == 2 ? "Cancelada" : "Entregada"}
+      {cell == true ? "Activo" : "Inactivo"}
     </div>
   );
 
@@ -57,6 +59,7 @@ const ModeloTabla = (datosTabla, setDatosTabla) => {
       headerStyle: {
         textAlign: "center",
       },
+      formatter: onFormatoEstado,
       editable: false,
       classes: "fw-bold text-wrap fs-6",
     },

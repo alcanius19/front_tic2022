@@ -84,11 +84,7 @@ const PaginaAdministracionVentas = () => {
     { nombre: "Entregada", valor: "3", estado: false },
   ]);
   // eslint-disable-next-line no-unused-vars
-  const [mensaje, setMensaje, pila, setPila] = useMensajes({
-    titulo: "",
-    mensaje: "",
-    tiempo: 0,
-  });
+  const [mensaje, setMensaje, pila, setPila] = useMensajes();
   const [errores, setErrores] = useState({
     codigo: "",
     descripcion: "",
@@ -101,6 +97,7 @@ const PaginaAdministracionVentas = () => {
   const [ventaBuscar, setVentaBuscar] = useState([]);
   const [productosActivos, setProductosActivos] = useState([]);
   const [productosBuscar, setProductosBuscar] = useState([]);
+  const [cargando, setCargando] = useState(false);
 
   const [mostrarBuscar, setMostrarBuscar] = useState(false);
   let propsformularioBuscarVenta = {
@@ -186,6 +183,14 @@ const PaginaAdministracionVentas = () => {
   };
 
   const btnNuevaFactura = () => {
+    if (codigoFactura !== "") {
+      alerta({
+        titulo: "Operacion Fallida",
+        mensaje: `La factura con el código ${codigoFactura} está activa. Limpie los datos e intente de nuevo.`,
+        tiempo: 0,
+      });
+      return;
+    }
     limpiarFactura();
     setCodigoFactura(v4());
   };
@@ -314,7 +319,7 @@ const PaginaAdministracionVentas = () => {
   };
 
   useEffect(() => {
-    if (ventaActiva?.length && ventaActiva.length > 0) {
+    if (ventaActiva?.length > 0) {
       console.log(JSON.stringify(ventaActiva));
       setCodigoFactura(ventaActiva[0].codigo);
       setVendedor(ventaActiva[0].id_vendedor);
@@ -336,6 +341,7 @@ const PaginaAdministracionVentas = () => {
       setProductosActivos(ventaActiva[0].productos);
     }
   }, [ventaActiva]);
+
   useEffect(() => {
     if (productosActivos.length > 0) {
       setTotal(
@@ -381,6 +387,7 @@ const PaginaAdministracionVentas = () => {
       }
     }
   }, [actualizarVenta.respuesta]);
+
   useEffect(() => {
     if (Object.keys(eliminarVenta.respuesta).length > 0) {
       if (eliminarVenta.respuesta[0].status == "eliminado") {
@@ -459,6 +466,7 @@ const PaginaAdministracionVentas = () => {
         break;
     }
   };
+
   useEffect(() => {
     if (
       errores.codigo !== "" ||
@@ -470,7 +478,7 @@ const PaginaAdministracionVentas = () => {
     ) {
       alerta({
         titulo: "Se encontraron errores:",
-        mensaje: `Revisa los campos ${errores.codigo} ${errores.descripcion} ${errores.cliente} ${errores.cedula} ${errores.fecha} ${errores.vendedor}`,
+        mensaje: `Revisa los campos: ${errores.codigo} ${errores.descripcion} ${errores.cliente} ${errores.cedula} ${errores.fecha} ${errores.vendedor}`,
         tiempo: 0,
       });
       setErrores({
@@ -484,6 +492,7 @@ const PaginaAdministracionVentas = () => {
       });
     }
   }, [errores]);
+
   return (
     //Principal
     <main className="principal d-flex border-top-1 rounded-1 flex-nowrap flex-shrink-0">
@@ -744,6 +753,7 @@ const PaginaAdministracionVentas = () => {
               aria-describedby="basic-addon1"
               value={total}
               onChange={(e) => setTotal(e.target.value)}
+              readOnly
             />
           </div>
         </div>
@@ -759,6 +769,7 @@ const PaginaAdministracionVentas = () => {
             modo={"checkbox"}
             metodoSeleccion={onSeleccion}
             alBorrarFilas={alBorrarFilas}
+            cargador={[cargando, setCargando]}
           />
         </div>
       </div>

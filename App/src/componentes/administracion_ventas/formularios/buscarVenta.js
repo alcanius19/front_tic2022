@@ -1,13 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Form } from "react-bootstrap";
 import PropTypes from "prop-types";
 import Tabla from "../tabla/Tabla";
 import modelo_tabla from "../tabla/ModeloTablaBuscarVenta";
 import useExtraerDatos from "../ganchos/extraer_venta";
 import useExtraer from "../ganchos/extraerInicio";
+import { v4 } from "uuid";
 
 // eslint-disable-next-line no-unused-vars
 const FormularioBuscarVenta = ({ formulario }) => {
+  // eslint-disable-next-line no-unused-vars
+  const renderInicial = useRef(true);
   // eslint-disable-next-line no-unused-vars
   const [usuarios, setUsuarios] = useExtraer("/api/usuarios");
   // eslint-disable-next-line no-unused-vars
@@ -33,86 +36,113 @@ const FormularioBuscarVenta = ({ formulario }) => {
   const [id, setId] = useState("");
   const [cliente, setCliente] = useState("-1");
   const [vendedorId, setVendedorId] = useState("-1");
+  const [cargando, setCargando] = useState(false);
 
   useEffect(() => {
     if (ventas.length > 0) {
-      setClientes((_clientes) => [
-        ..._clientes,
+      setClientes([
         ...ventas.map((venta) => ({
           nombre: venta.cliente,
           cedula: venta.cedula,
         })),
       ]);
       setDatosVentas(ventas);
+      setCargando(false);
+    } else {
+      setCargando(true);
     }
   }, [ventas.length]);
 
   useEffect(() => {
     if (id !== "") {
-      setCliente("-1");
-      setVendedorId("-1");
+      if (cliente !== "-1") setCliente("-1");
+      if (vendedorId !== "-1") setVendedorId("-1");
       setDatosId((datosId) => ({
         ...datosId,
         parametro: id,
         items: [],
       }));
-    } else {
-      setDatosVentas(ventas);
+      setCargando(true);
     }
+    return () => {
+      if (datosVentas.length == 0 || id !== "") setDatosVentas(ventas);
+    };
   }, [id]);
 
   useEffect(() => {
-    if (cliente !== "" && cliente !== "-1") {
-      setId("");
-      setVendedorId("-1");
+    if (cliente !== "-1") {
+      if (id !== "") setId("");
+      if (vendedorId !== "-1") setVendedorId("-1");
       setDatosCliente((datosCliente) => ({
         ...datosCliente,
         parametro: cliente,
         items: [],
       }));
-    } else {
-      setDatosVentas(ventas);
+      setCargando(true);
     }
+    return () => {
+      if (datosVentas.length == 0 || cliente !== "-1") setDatosVentas(ventas);
+    };
   }, [cliente]);
 
   useEffect(() => {
-    if (vendedorId !== "" && vendedorId !== "-1") {
-      setId("");
-      setCliente("-1");
+    if (vendedorId !== "-1") {
+      if (id !== "") setId("");
+      if (cliente !== "-1") setCliente("-1");
       setDatosVendedor((datosVendedor) => ({
         ...datosVendedor,
         parametro: vendedorId,
         items: [],
       }));
-    } else {
-      setDatosVentas(ventas);
+      setCargando(true);
     }
+    return () => {
+      if (datosVentas.length == 0 || vendedorId !== "-1")
+        setDatosVentas(ventas);
+    };
   }, [vendedorId]);
 
   useEffect(() => {
-    if (datosId?.items && datosId.items.length >= 0) {
+    if (id !== "" && datosId?.items.length >= 0 && datosId.parametro === "") {
       console.log(datosId);
       setDatosVentas([...datosId.items]);
+      setCargando(false);
     }
-  }, [datosId.items.length]);
+    return () => {
+      setDatosVentas([]);
+    };
+  }, [datosId.items]);
+
   useEffect(() => {
-    if (datosVendedor?.items && datosVendedor.items.length >= 0) {
-      console.log(datosVendedor);
-      setDatosVentas([...datosVendedor.items]);
-    }
-  }, [datosVendedor.items.length]);
-  useEffect(() => {
-    if (datosCliente?.items && datosCliente.items.length >= 0) {
+    if (
+      cliente !== "-1" &&
+      datosCliente?.items.length >= 0 &&
+      datosCliente.parametro === ""
+    ) {
       console.log(datosCliente);
       setDatosVentas([...datosCliente.items]);
+      setCargando(false);
     }
-  }, [datosCliente.items.length]);
+    return () => {
+      setDatosVentas([]);
+    };
+  }, [datosCliente.items]);
   useEffect(() => {
-    if (datosVentas.length > 0) {
-      console.log(JSON.stringify(datosVentas));
+    if (
+      vendedorId !== "-1" &&
+      datosVendedor?.items.length >= 0 &&
+      datosVendedor.parametro === ""
+    ) {
+      console.log(datosVendedor);
+      setDatosVentas([...datosVendedor.items]);
+      setCargando(false);
     }
-  }, [datosVentas]);
+    return () => {
+      setDatosVentas([]);
+    };
+  }, [datosVendedor.items]);
 
+  useEffect(() => {}, [cargando]);
   const onSeleccion = (filasSeleccionadas) => {
     formulario.setVentaBuscar(filasSeleccionadas);
   };
@@ -125,6 +155,7 @@ const FormularioBuscarVenta = ({ formulario }) => {
           type="text"
           placeholder={"Ingrese el id..."}
           value={id}
+          readOnly={cargando}
           onChange={(e) => setId(e.target.value)}
         />
         <Form.Text className="text-muted">Ingresa el id.</Form.Text>
@@ -134,6 +165,7 @@ const FormularioBuscarVenta = ({ formulario }) => {
         <Form.Select
           value={vendedorId}
           aria-label="cmbVendedor"
+          disabled={cargando}
           onChange={(e) => setVendedorId(e.target.value)}
         >
           <option value={"-1"} defaultValue>
@@ -160,6 +192,7 @@ const FormularioBuscarVenta = ({ formulario }) => {
         <Form.Select
           value={cliente}
           aria-label="cmbCliente"
+          disabled={cargando}
           onChange={(e) => setCliente(e.target.value)}
         >
           <option value={"-1"} defaultValue>
@@ -168,7 +201,7 @@ const FormularioBuscarVenta = ({ formulario }) => {
           {clientes.length > 0
             ? // eslint-disable-next-line no-unused-vars
               clientes.map((_cliente, i) => (
-                <option key={_cliente.cedula} value={_cliente.cedula}>
+                <option key={v4()} value={_cliente.cedula}>
                   {_cliente.nombre}
                 </option>
               ))
@@ -181,6 +214,7 @@ const FormularioBuscarVenta = ({ formulario }) => {
         modelo={modelo_tabla}
         modo={"radio"}
         metodoSeleccion={onSeleccion}
+        cargador={[cargando, setCargando]}
       />
     </Form>
   );

@@ -1,11 +1,11 @@
 import { useEffect, useState, useRef } from "react";
 
-const useMensajes = (mensaje) => {
+const useMensajes = () => {
   const [mensajeAlerta, setMensajeAlerta] = useState({
     id: 0,
-    titulo: mensaje.titulo,
-    mensaje: mensaje.mensaje,
-    tiempo: mensaje.tiempo,
+    titulo: "",
+    mensaje: "",
+    tiempo: 0,
   });
   const [pila, setPila] = useState([]);
 

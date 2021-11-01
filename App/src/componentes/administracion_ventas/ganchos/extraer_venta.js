@@ -8,7 +8,7 @@ const useExtraer = (propiedades) => {
     items: propiedades.items,
   });
   const api = axios.create({
-    baseURL: "http://localhost:4000/",
+    baseURL: process.env.API_URL || "http://localhost:4000/",
   });
 
   const devolverItems = (datos) => {
@@ -37,6 +37,15 @@ const useExtraer = (propiedades) => {
               items: respuesta,
             }));
           } catch (error) {
+            if (error.response) {
+              console.log(error.response.data);
+              console.log(error.response.status);
+              console.log(error.response.headers);
+            } else if (error.request) {
+              console.log(error.request);
+            } else {
+              console.log("Error", error.message);
+            }
             console.error(JSON.stringify(error));
           }
         };

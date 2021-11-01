@@ -12,6 +12,7 @@ const FormularioAgregarProducto = ({ formulario }) => {
   // eslint-disable-next-line no-unused-vars
   const [productos, setProductos] = useExtraer("/api/productos");
   const [datosProductos, setDatosProductos] = useState([]);
+  const [cargando, setCargando] = useState(false);
 
   const [datosProductoId, setDatosProductoId] = useExtraerDatos({
     ruta: "/api/productos",
@@ -25,6 +26,15 @@ const FormularioAgregarProducto = ({ formulario }) => {
   });
 
   useEffect(() => {
+    if (productos.length > 0) {
+      setDatosProductos([...productos]);
+      setCargando(false);
+    } else {
+      setCargando(true);
+    }
+  }, [productos.length]);
+
+  useEffect(() => {
     if (productoId !== "") {
       setDescripcion("");
       setDatosProductoId((datosId) => ({
@@ -32,9 +42,12 @@ const FormularioAgregarProducto = ({ formulario }) => {
         parametro: productoId,
         items: [],
       }));
-    } else {
-      setDatosProductos(productos);
+      setCargando(true);
     }
+    return () => {
+      if (datosProductos.length == 0 || productoId !== "")
+        setDatosProductos(productos);
+    };
   }, [productoId]);
 
   useEffect(() => {
@@ -42,36 +55,50 @@ const FormularioAgregarProducto = ({ formulario }) => {
       setProductoId("");
       setDatosProductoDesc((datosCliente) => ({
         ...datosCliente,
-        parametro: descripcion,
+        parametro: encodeURIComponent(descripcion.trim()),
         items: [],
       }));
-    } else {
-      setDatosProductos(productos);
+      setCargando(true);
     }
+    return () => {
+      if (datosProductos.length == 0 || descripcion !== "")
+        setDatosProductos(productos);
+    };
   }, [descripcion]);
 
   useEffect(() => {
+    console.log(datosProductoId);
     if (
-      datosProductoId?.items &&
-      datosProductoId.items.length >= 0 &&
-      datosProductoId.items[0]?.res
+      productoId !== "" &&
+      datosProductoId?.items.length >= 0 &&
+      datosProductoId.parametro === ""
     ) {
       console.log(datosProductoId);
-      setDatosProductos([datosProductoId.items[0].res]);
+      if (datosProductoId.items[0]?.res)
+        setDatosProductos([datosProductoId.items[0].res]);
+      else setDatosProductos([]);
+      setCargando(false);
     }
-  }, [datosProductoId.items.length]);
-  useEffect(() => {
-    if (datosProductoDesc?.items && datosProductoDesc.items.length >= 0) {
-      console.log(datosProductoDesc);
-      setDatosProductos([...datosProductoDesc.items]);
-    }
-  }, [datosProductoDesc.items.length]);
+    return () => {
+      setDatosProductos([]);
+    };
+  }, [datosProductoId.items]);
 
   useEffect(() => {
-    if (productos.length > 0) {
-      setDatosProductos([...productos]);
+    if (
+      descripcion !== "" &&
+      datosProductoDesc?.items.length >= 0 &&
+      datosProductoDesc.parametro === ""
+    ) {
+      console.log(datosProductoDesc);
+      setDatosProductos([...datosProductoDesc.items]);
+      setCargando(false);
     }
-  }, [productos]);
+    return () => {
+      setDatosProductos([]);
+    };
+  }, [datosProductoDesc.items]);
+
   const onSeleccion = (filasSeleccionadas) => {
     if (filasSeleccionadas.length > 0) {
       filasSeleccionadas = filasSeleccionadas.map((fila) => ({
@@ -91,6 +118,7 @@ const FormularioAgregarProducto = ({ formulario }) => {
           type="text"
           placeholder={"Ingrese el id..."}
           value={productoId}
+          readOnly={cargando}
           onChange={(e) => setProductoId(e.target.value)}
         />
         <Form.Text className="text-muted">Ingresa el id.</Form.Text>
@@ -101,6 +129,7 @@ const FormularioAgregarProducto = ({ formulario }) => {
           type="text"
           placeholder={"Ingrese la descripción..."}
           value={descripcion}
+          readOnly={cargando}
           onChange={(e) => setDescripcion(e.target.value)}
         />
         <Form.Text className="text-muted">
@@ -112,6 +141,7 @@ const FormularioAgregarProducto = ({ formulario }) => {
         <Form.Select
           value={productoId}
           aria-label="cmbProducto"
+          disabled={cargando}
           onChange={(e) => setProductoId(e.target.value)}
         >
           <option value={""} defaultValue>
@@ -133,6 +163,7 @@ const FormularioAgregarProducto = ({ formulario }) => {
         modelo={modelo_tabla}
         modo={"checkbox"}
         metodoSeleccion={onSeleccion}
+        cargador={[cargando, setCargando]}
       />
     </Form>
   );

@@ -31,6 +31,18 @@ const ModeloTabla = (datosTabla, setDatosTabla, alBorrarFilas) => {
   };
 
   // eslint-disable-next-line no-unused-vars
+  const onFormatoEstado = (cell, row, rowIndex, extraData) => (
+    <div
+      className={`m-0 fw-bold badge ${
+        cell == true ? "bg-success" : "bg-danger"
+      } text-wrap`}
+      style={{ width: "6rem" }}
+    >
+      {cell == true ? "Activo" : "Inactivo"}
+    </div>
+  );
+
+  // eslint-disable-next-line no-unused-vars
   const onFormato = (cell, row, rowIndex, extraData) => (
     <div className="d-flex justify-content-center align-items-center">
       <button className={"btn btn-Dark"} onClick={() => handleDelete(row)}>
@@ -100,6 +112,7 @@ const ModeloTabla = (datosTabla, setDatosTabla, alBorrarFilas) => {
       headerStyle: {
         textAlign: "center",
       },
+      formatter: onFormatoEstado,
       editable: false,
       classes: "fw-bold text-wrap fs-6",
     },

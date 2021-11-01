@@ -10,7 +10,7 @@ const useEliminar = (propiedades) => {
   });
   const [respuesta, setRespuesta] = useState({});
   const api = axios.create({
-    baseURL: "https://innovatech2021.herokuapp.com/",
+    baseURL: process.env.API_URL || "http://localhost:4000/",
   });
 
   const devolverItems = (datos) => {

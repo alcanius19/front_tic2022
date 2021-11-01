@@ -4,7 +4,7 @@ import axios from "axios";
 const useExtraer = (ruta) => {
   const [datos, setDatos] = useState([]);
   const api = axios.create({
-    baseURL: "https://innovatech2021.herokuapp.com/",
+    baseURL: process.env.API_URL || "http://localhost:4000/",
   });
 
   useEffect(() => {
@@ -12,6 +12,7 @@ const useExtraer = (ruta) => {
       const timeoutId = setTimeout(() => {
         const extraer = async () => {
           try {
+            console.log("URL:" + api.defaults.baseURL);
             const res = await api.get(`${ruta}`);
             //console.log(res.data);
             setDatos((datos) => [...datos, ...res.data.map((item) => item)]);

@@ -8,7 +8,7 @@ const ContenedorMensajes = ({ pila, setPila }) => (
   <ToastContainer
     position="top-end"
     className="d-flex flex-column p-3"
-    style={{ zIndex: 11 }}
+    style={{ zIndex: 2000 }}
   >
     {pila.length > 0
       ? pila.map((item, i) => {

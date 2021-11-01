@@ -7,6 +7,8 @@ import cellEditFactory from "react-bootstrap-table2-editor";
 import paginacion from "./Paginacion";
 import modelo_seleccion from "./ModeloSeleccion";
 import { PropTypes } from "prop-types";
+import overlayFactory from "react-bootstrap-table2-overlay";
+import { Spinner } from "react-bootstrap";
 
 const Tabla = ({
   datos,
@@ -15,6 +17,7 @@ const Tabla = ({
   modo,
   metodoSeleccion,
   alBorrarFilas,
+  cargador,
 }) => {
   const [
     keyid,
@@ -29,52 +32,48 @@ const Tabla = ({
     keyid,
     [filasSeleccionadas, setFilasSeleccionadas]
   );
+  // eslint-disable-next-line no-unused-vars
+  const [cargando, setCargando] = cargador;
+
   useEffect(() => {
-    console.log(filasSeleccionadas);
+    //console.log(filasSeleccionadas);
     if (filasSeleccionadas?.length && filasSeleccionadas.length > 0) {
       metodoSeleccion(filasSeleccionadas);
     }
   }, [filasSeleccionadas]);
 
   const onTableChange = (
-    type,
+    tipo,
     // eslint-disable-next-line no-unused-vars
-    { data, cellEdit: { rowId, dataField, newValue } }
+    { page, sizePerPage, sortOrder, filters, data, cellEdit }
   ) => {
-    //setTimeout(() => {
-    // const resultado = data.map((row) => {
-    //   if (row[keyid] === rowId) {
-    //     const newRow = { ...row };
-    //     newRow[dataField] = newValue;
-    //     return newRow;
-    //   }
-    //   return row;
-    // });
-    setDatos((_datos) =>
-      alGuardarFilas(
-        _datos.map((fila) => {
-          if (fila[keyid] == rowId) {
-            fila[dataField] = newValue;
-          }
-          return fila;
-        })
-      )
-    );
-    setFilasSeleccionadas(
-      [...filasSeleccionadas].filter((fila) => fila[keyid] !== rowId)
-    );
-    setSeleccionar([...seleccionar].filter((id) => id != rowId));
-    // }, 1000);
+    if (tipo === "cellEdit") {
+      setDatos((_datos) =>
+        alGuardarFilas(
+          _datos.map((fila) => {
+            if (fila[keyid] == cellEdit.rowId) {
+              fila[cellEdit.dataField] = cellEdit.newValue;
+            }
+            return fila;
+          })
+        )
+      );
+      setFilasSeleccionadas(
+        [...filasSeleccionadas].filter((fila) => fila[keyid] !== cellEdit.rowId)
+      );
+      setSeleccionar([...seleccionar].filter((id) => id != cellEdit.rowId));
+    }
   };
   // eslint-disable-next-line no-unused-vars
-  const handleDataChange = ({ dataSize }) => {
-    console.log("Hi");
-  };
+  const handleDataChange = ({ dataSize }) => {};
+
+  const IndicacionSinDatos = () => <div>Sin resultados.</div>;
 
   return (
     <BootstrapTable
       remote={{ cellEdit: true }}
       keyField={keyid}
+      loading={cargando}
       data={datos}
       columns={columnas}
       selectRow={opcionesSeleccion}
@@ -85,7 +84,19 @@ const Tabla = ({
       pagination={paginationFactory(paginacion(datos))}
       onTableChange={onTableChange}
       onDataSizeChange={handleDataChange}
-      noDataIndication={"Sin resultados."}
+      noDataIndication={() => <IndicacionSinDatos />}
+      overlay={overlayFactory({
+        spinner: <Spinner animation="border" variant="dark" />,
+        styles: {
+          overlay: (base) => ({
+            ...base,
+            background: "rgba(255, 255, 255, 0.9)",
+          }),
+        },
+      })}
+      striped
+      hover
+      condensed
     />
   );
 };
@@ -97,6 +108,7 @@ Tabla.propTypes = {
   modo: PropTypes.string.isRequired,
   metodoSeleccion: PropTypes.func.isRequired,
   alBorrarFilas: PropTypes.func,
+  cargador: PropTypes.array.isRequired,
 };
 
 export default Tabla;

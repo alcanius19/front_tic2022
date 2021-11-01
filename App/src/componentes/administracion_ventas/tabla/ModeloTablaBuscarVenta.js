@@ -10,7 +10,9 @@ const ModeloTabla = (datosTabla, setDatosTabla) => {
   // eslint-disable-next-line no-unused-vars
   const onFormatoEstado = (cell, row, rowIndex, extraData) => (
     <div
-      className="m-0 fw-bold badge bg-dark text-wrap"
+      className={`m-0 fw-bold badge ${
+        cell == 1 ? "bg-primary" : cell == 2 ? "bg-danger" : "bg-success"
+      } text-wrap`}
       style={{ width: "6rem" }}
     >
       {cell == 1 ? "En proceso" : cell == 2 ? "Cancelada" : "Entregada"}
